@@ -1,0 +1,69 @@
+﻿<Window x:Class="Converter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:Converter"
+        xmlns:vm="clr-namespace:Converter.ViewModel"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="185" Width="620">
+
+
+    <DockPanel>
+        <Button DockPanel.Dock="Bottom" 
+                Height="30" 
+                Content="Convert"
+                Command="{Binding ConvertCommand}"/>
+
+
+        <UniformGrid Columns="2" Rows="4">
+            <Label Content="Currency I Have:"
+                   Margin="0 8 0 0"
+                   Padding="10 0 0 0"/>
+            <Label Content="Currency I Want:"
+                   Margin="0 8 0 0"
+                   Padding="10 0 0 0"/>
+
+            <ComboBox Name="comboBoxFrom" 
+                      VerticalContentAlignment="Center"
+                      Padding="10 0 0 0"
+                      ItemsSource="{Binding CurrencyList}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectionChangedFromCommand}"
+                                               CommandParameter="{Binding ElementName=comboBoxFrom, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+
+            <ComboBox Name="comboBoxTo" 
+                      VerticalContentAlignment="Center"
+                      Padding="10 0 0 0"
+                      ItemsSource="{Binding CurrencyList}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectionChangedToCommand}"
+                                               CommandParameter="{Binding ElementName=comboBoxTo, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+
+            <Label Content="Amount:"
+                   Margin="0 8 0 0"
+                   Padding="10 0 0 0"/>
+            <Label Content="Result:"
+                   Margin="0 8 0 0"
+                   Padding="10 0 0 0"/>
+            <TextBox Padding="10 0 0 0"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding InputAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Padding="10 0 0 0" 
+                     VerticalContentAlignment="Center"
+                     Text="{Binding OutputAmount, Mode=OneWay}" IsReadOnly="True"/>
+        </UniformGrid>
+    </DockPanel>
+</Window>
